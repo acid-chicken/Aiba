@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -68,7 +68,7 @@ namespace AcidChicken.Aiba
                         Task.Delay(0));
                 DiscordClient.Ready += () =>
                     Task.WhenAny(
-                        Service.AddModulesAsync(Assembly.GetEntryAssembly()),
+                        Service.AddModulesAsync(Assembly.GetEntryAssembly(), default),
                         OnReadyAsync(),
                         Task.Delay(0));
                 await Task.Delay(-1);
@@ -112,7 +112,7 @@ namespace AcidChicken.Aiba
             var context = new CommandContext(DiscordClient, message);
             using (var typing = context.Channel.EnterTypingState())
             {
-                var result = await Service.ExecuteAsync(context, position);
+                var result = await Service.ExecuteAsync(context, position, default);
                 if (!result.IsSuccess)
                 {
                     await context.Channel.SendMessageAsync
@@ -124,7 +124,8 @@ namespace AcidChicken.Aiba
                                 .WithDescription(result.ErrorReason)
                                 .WithCurrentTimestamp()
                                 .WithColor(FailureColor)
-                                .WithAuthor(context.User)
+                                .WithAuthor($"{(context.User is IGuildUser user ? user.Nickname ?? user.Username : context.User.Username)}#{context.User.Discriminator}", context.User.GetAvatarUrl())
+                                .Build()
                     );
                 }
             }
@@ -171,7 +172,9 @@ namespace AcidChicken.Aiba
             {
                 Tickers = await GetTickersAsync();
             }
-            catch { }
+            catch
+            {
+            }
         }
     }
 }
