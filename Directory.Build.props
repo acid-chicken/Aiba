@@ -7,7 +7,7 @@
     <VersionPrefix>2.0.0</VersionPrefix>
     <Author>Acid Chicken</Author>
     <Copyright>Copyright (c) 2018-2019 Acid Chicken (硫酸鶏)</Copyright>
-    <RepoRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'BlurHash.sln'))\</RepoRoot>
+    <RepoRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), 'Aiba.sln'))\</RepoRoot>
     <SrcRoot>$([System.IO.Path]::GetFullPath('$(RepoRoot)src\'))</SrcRoot>
     <PathMap>$(SrcRoot)=.</PathMap>
   </PropertyGroup>
